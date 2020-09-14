@@ -24,8 +24,8 @@ struct CommPacket
     by manipulating individual bits
     copy the screen data into here before sending
 */ 
-    uint8_t screenBuf[16][4], 
-        width = 16, height = 4;
+    uint8_t screenBuf[128][64], 
+        width = 128, height = 64;
     bool newInfoAvailable;
 };
 

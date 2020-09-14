@@ -9,7 +9,12 @@ Display disp;
 
 void setup()
 {
+    Serial.begin(115200);
+    randomSeed(analogRead(A2));
+    while(!Serial);
+    Serial.println("It works");
     InputManager::init();
+    disp.start();
     disp.drawScreen(Display::Screens::Searching);
     if(!radioComm.begin()) {
         Serial.println(F("Radio init failed"));
@@ -33,9 +38,9 @@ void loop()
     if(InputManager::sendBtnPressed())
     {
         disp.drawScreen(Display::Screens::SendingMessage);
-        for(uint8_t x=0; x<16; x++)
-            for(uint8_t y=0; y<4; y++)
-                dataPacket.screenBuf[x][y] = disp.screenBuffer[x][y];
+        for(uint8_t x=0; x<128; x++)
+            for(uint8_t y=0; y<64; y++)
+                dataPacket.screenBuf[x][y] = disp.pixels[x][y];
         Serial.printf("Data packet response: %d", radioComm.sendPacket(dataPacket)); 
         delay(2000);
     }

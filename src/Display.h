@@ -17,10 +17,11 @@ class Display
             Searching
         };
         Display();
+        void start();
         void drawScreen(Screens screen);
         void updatePosition(int8_t x, int8_t y);
-        void showMessage(uint8_t screenBufPtr[][4]);
-        uint8_t screenBuffer[16][4];
+        void showMessage(uint8_t screenBufPtr[][64]);
+        uint8_t pixels[128][64];
     private:
         void clearScreen();
         Adafruit_SSD1306 oled;

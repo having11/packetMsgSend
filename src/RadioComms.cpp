@@ -2,14 +2,6 @@
 
 RadioComms::RadioComms()
 {
-    Serial.begin(115200);
-    rf69 = new RH_RF69(RFM69_CS, RFM69_INT);
-    _address = random(0, ADDR_UPPER_BOUND);
-    _destAddress = -1;
-    Serial.printf("Starting with address %d\n", _address);
-    rf69_manager = new RHReliableDatagram(*rf69);
-    rf69_manager->setThisAddress(_address);
-    pinMode(RFM69_RST, OUTPUT);
 }
 
 int8_t RadioComms::scanForConnection(bool recvPackets)
@@ -115,6 +107,14 @@ void RadioComms::radioReset()
 
 bool RadioComms::begin()
 {
+    rf69 = new RH_RF69(RFM69_CS, RFM69_INT);
+    _address = random(0, ADDR_UPPER_BOUND);
+    _destAddress = -1;
+    Serial.printf("Starting with address %d\n", _address);
+    rf69_manager = new RHReliableDatagram(*rf69);
+    rf69_manager->setThisAddress(_address);
+    pinMode(RFM69_RST, OUTPUT);
+
     radioReset();
     if(!rf69_manager->init()) {
         Serial.println(F("Unable to init radio module"));
